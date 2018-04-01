@@ -1,0 +1,149 @@
+<p id="notice">
+  <%= notice %>
+</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+    <%if current_user.present? %>
+    <%if current_user.role_id == 1%>
+    <%= link_to 'Edit', edit_book_detail_path(@book_detail) , :class=> "btn btn-primary"%>
+    <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-sm-8">
+  <%#= link_to 'Export', book_details_book_export_path(@book_detail), :class=>"btn btn-primary"%>
+    </div>
+  <div class="col-sm-2">
+      <%= link_to 'Back', book_details_path , :class=> "btn btn-primary"%>
+    </div>
+  </div>
+</div>
+<p>
+
+
+<table class="table table-striped">
+<tbody>  
+<tr>
+    <th><h3>Book Name:</h3></th>
+    <th><h3 style="float:left"> <%= @book_detail.book_name %></h3></th>
+    </tr>
+
+<tr>
+    <th><h3 >Book Author:</h3></th>
+    <th><h3 style="float:left"><%= @book_detail.author.author_name %></h3></th>
+    </tr>
+
+ <tr>
+    <th><h3 >Book Edition:</h3></th>
+    <th><h3 style="float:left"><%= @book_detail.book_edition %></h3></th>
+    </tr>
+<tr>
+    <th><h3 >Book ID:</h3></th>
+    <th><h3 style="float:left">
+     <%= form_tag('block_book', class: "form-horizontal") do%>
+     <input type="hidden" name="book_id" value="<%=@book_detail.id %>">
+      <%= select_tag "book_id", options_from_collection_for_select(@book_detail.bookids.where(is_issue: false), "id", "book_id"), {class: "form-controll bookid",  include_blank: true} %>
+    </h3>
+    <br>
+    <br>
+    <%if current_user.present?%>
+    <%if current_user.role_id == 2%>
+     <%= submit_tag "Block Book", class: "btn btn-success pull-right" ,id: "job_card_save"%>
+    
+    <%end%>   
+     <%end%>
+     <%end%>
+  </th>
+
+    </tr>
+        
+<tr>
+    <th><h3 >Copy Right Year:</h3></th>
+    <th><h3 style="float:left">2010</h3></th>
+    </tr>
+
+ <tr>
+    <th><h3 >Book Publisher:</h3></th>
+    <th><h3 style="float:left"><%= @book_detail.publisher.publisher_name %></h3></th>
+    </tr>
+
+    <tr>
+    <th><h3>Local/Foreign<br> Author:</h3></th>
+    <th><h3 style="float:left"><%= @book_detail.author_type %></h3></th>
+    </tr>
+    
+</tbody>
+</table></br>
+
+ 
+<h2>Book PDF</h2><hr style="margin-top:-35px;margin-left:110px;"></br>
+<% @book_detail.book_docs.map do |book|%>
+<image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAB6CAMAAABHh7fWAAAAZlBMVEX///8BAQEAAADq6uoLCwvl5eUhISHW1tYeHh7e3t4TExPi4uKBgYEqKir8/Pz39/dHR0e3t7eqqqqKiorw8PBfX18yMjLBwcE4ODh4eHiYmJjQ0NBQUFCSkpJZWVlubm4/Pz+hoaGqLlkRAAAFCUlEQVRogdWba3uqMAyAZ0CuEwRBQJzo//+Th7a0Vqdr2obtOfmwq/A2bdpcCB8fb6XoTlOfwcYsAP2he38jW4kn4IIgMzbAkQieT2jsnT6VBOQ65NyFDdrX97/M7F3qTR7sFNYU95301o3M4bUXeXImM/bJg1x7kBn74ExONTIghYjd8htx+4ZoqtLcJNuqV5eI4X65kUelwzz8AHfN9vikt9t6t3fyiL6ofrIOJ3aegT35o3y2TBd2pcg2C1bsn9EOtjZJdGJ1Hk/P+xHg0xYdSbTdqIdvRwHAYEcuM7FqVis9yyd88yi2egehvNLOB32+OgDt2Aodbf3Rdmxa9MZmvanRMP0V2oYdhIuFO6BfBlAzu0CjSbXm+xvHpkej7XwNNJK9Dhp1Kq+CxsUO5Ba+oBHx+TpaM7gx1loLvYH9n6E3xrRkRTQ066BP5oTFFOy5ohtzsgT7n6M91801R7I/pERLzJWb0E5az1lLu3uWKAm1fAwgXgn9Qsom7bQiwW+iueT3HO630R+dZP8+usCjcRbexN2ITIGVndNofTvON8xw6STthE9cE2QKT4qWlgOAsQhS9IWrDAh3RI6ebwbXIJu/tr+MLoHn3wMbACnavLk4+sQcJRwNTligCTcXm/CBo3coNOFas5rBrjigtSZED9y42Vr3iHyKFF2xGd+dARFnUqMbWDY28ebCuA9eq8cfKZTuo5MlLkydidhfi1IwnDFZOzFalFJxdVRidNkDdr6p0bwCbgrqV0Ln3HsRo3GxGdcaKhyaNDYTzylQRzi5mV3F5GBqQ8ToWBxnqLI5MbqWh3hmtjRi9IV5LZ7Ymh0IrYU3CbAQ6czYNzOa2H2wUtg2YsttKonRTnjLkKXwYBAajlPyUAF69tONmVvyc95Hiv4C9XieVygT+eEiSOM4f/KklGiWMUMiDrKCBSwQzXcNuuEYZbOZhsm+0umUFs5nWblqbuZhe470wtFZu5zQwstEj/2LbSaOF71yBro/JZzwm1rpIq+H/UOxTlXLtICRDt1kIv5ubt87hQC+bvWNL/9lBTS36bjr71RtANB3QT5eH3JQMnTMLfqq6gpMLp+33cMfNvojRTL0BTaypMBkP9VpM2+lcgAZm4v/3b0p1ebqNO36qcrvhhy3QmExKO05KtHmKo9StbDtnqOj+BAtE57pATrJhAcHNamH10NLu2qW8SF+IECPrZg6BsaEg2To6qhWebABe6PTqzIWywYKXwu/LabL/oN/Dq/Q7hZeTmKrCqWt2wc9Jry4CDLvTrJtdPFDTxy86/b8u52J+aFZA9p8TC8nqEPHpDuaFQVn25r4CFz659zRB468cjKmVuWBft5ctYw8AFe1eYF23VylHA20TmQfCx8XtV17U30O0uZzDrux3ZW0aE/5L9C4CpIVmraCZIX+DyZcfCz7+en+Cugyc41F3kqgwhuDp0/kEH2a2x+kkujIcDLI1wDg6HZqfpfzEloZPYBst/Z9n0DJKDNRY3wT39NH/3c4ZilVE7LZelS7NWQU/SG9ut3RWNJUDRUUc17JljeU3Rbn+6chOo15sHWSYDvWvdYPEyLMdtQ+z5LGxFX0YgfygcEXDz3FFeg3P17J/TboqM79FZ93AhGyvb/oidkQokOc2dQo2ahn+0oOZGxA9ytLGfdAQWfFHutcqejOPtYt5Vw7vc+X1pd+lznLrj+fYg//1+Spo+QBldtdQf4BVmxIj1i4wLcAAAAASUVORK5CYII=" style="height:150px;width:150px;margin-left:45%"/></br>
+<a class="btn btn-primary" style="background-color:whitesmoke;color: red;border:1.5px solid grey;border-radius:5px" href="<%= root_url+ book.pdf_doc.to_s%>" target="blank">Open </a>
+<%end%>
+<%#= form_tag("/book_docs", method: "post") do %>
+  
+  <%#= file_field_tag "pdf_doc" %>
+  <%#= hidden_field_tag "book_detail_id", @book_detail.id %>
+  <%#= submit_tag("Add") %>
+<%# end %>
+<%if current_user.present?%>
+<%if current_user.role_id == 1%>
+<%= form_with(model: @book_doc, local: true) do |form| %>
+
+    <%= form.hidden_field :book_detail_id, id: :book_doc_book_name , value: @book_detail.id%>
+
+
+  <div class="field">
+    <label> Select PDF </label>
+    <%= form.file_field :pdf_doc, id: :book_doc_pdf_doc %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Upload '%>
+  </div>
+<% end %>
+
+<h1>Book Entries</h1>
+
+<table id="entry" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Issue date</th>
+      <th>Return date</th>
+      <th>Book</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <%if @entry.present?%>
+    <% @entry.each do |entry| %>
+    <% unless entry.nil? %>
+      <tr>
+  <td><%= entry.user.name %></td>
+        <td><%= entry.issue_date %></td>
+        <td><%= entry.return_date %></td>
+        <td><%= entry.bookid.book_detail.book_name %></td>
+        <td>
+          <%= link_to 'Show', entry %>
+          <%= link_to 'Edit', edit_entry_path(entry) %>
+          <%= link_to 'Destroy', entry, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+      <% end %>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<% end %>
+   <script>
+          $('.bookid').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Book Id"
+          });
+          </script>

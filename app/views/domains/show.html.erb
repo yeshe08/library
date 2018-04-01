@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Domain name:</strong>
+  <%= @domain.domain_name %>
+</p>
+<p>
+  <strong>Domain Books:</strong>
+  <%= @domain.book_details.count %>
+</p>
+
+<table id="books" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>Book name</th>
+      <th>Book number</th>
+      <th>Book edition</th>
+      <th>Author type</th>
+      <th>Domain</th>
+      <th>Author</th>
+      <th>Publisher</th>
+        <th colspan="3"> Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%@domain.book_details.each do |book_detail| %>
+      <tr>
+        <td>
+          <%= book_detail.book_name %>
+        </td>
+        <td>
+          <%#= book_detail.book_number %>
+        </td>
+        <td>
+          <%= book_detail.book_edition %>
+        </td>
+        <td>
+          <%= book_detail.author_type %>
+        </td>
+        <td>
+          <%= book_detail.domain.domain_name %>
+        </td>
+        <td>
+          <%= book_detail.author.author_name %>
+        </td>
+        <td>
+          <%= book_detail.publisher.publisher_name %>
+        </td>
+
+        <td>
+          <%= link_to 'Show', book_detail %>
+            <%if current_user.present?%>
+                        <%if current_user.role_id == 1%>
+
+              <%= link_to 'Edit', edit_book_detail_path(book_detail) %>
+                <%= link_to 'Destroy', book_detail, method: :delete, data: { confirm: 'Are you sure?' } %>
+                  <%end%>
+                  <%end%>
+        </td>
+
+      </tr>
+      <% end %>
+  </tbody>
+</table>

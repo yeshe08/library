@@ -1,0 +1,276 @@
+<%= form_with(model: book_detail, local: true) do |form| %>
+  <% if book_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(book_detail.errors.count, "error") %> prohibited this book_detail from being saved:</h2>
+
+      <ul>
+        <% book_detail.errors.full_messages.each do |message| %>
+          <li>
+            <%= message %>
+          </li>
+          <% end %>
+      </ul>
+    </div>
+    <% end %>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Name:</h3>
+          </div>
+          <div class="col-sm-6">
+            <%= form.text_field :book_name, id: :book_detail_book_name, :class => "form-control" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Domain</h3>
+          </div>
+          <div class="col-sm-6">
+            <%= select_tag "domain_id", options_from_collection_for_select(Domain.all, "id", "domain_name"), {class: "form-controll customername",  include_blank: true} %>
+              <%= form.text_field :domain_id, id: :book_detail_domain_id, class: "form-control ", disabled: true, style: "display: none;"%>
+                
+              <input type="text" name="domain_name" class="form-control domain_name">
+              <%#= form.text_field :domain_id, id: :book_detail_domain_id, :class=>"form-control"  %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book ID:</h3>
+          </div>
+          <div class="col-sm-5">
+            <%#= form.text_field :book_number, id: :book_detail_book_number,:placeholder => "Book Id", :class => "form-control"  %>
+            <input type="number" name="bookid[]" class="form-control" placeholder="Book Id">  
+          </div>
+          <div class="col-sm-1 end">
+          <a class="btn btn-success" onclick="addBookId(0)" id="add0">+</a>
+          </div>
+        </div>
+        <%id = 1%>
+        <%10.times do%>
+
+           <div class="row bookid" id="bookid<%=id %>">
+           <div class="col-sm-6"></div>
+           <div class="col-sm-5">
+            <input type="number" name="bookid[]" class="form-control" placeholder="Book Id">
+            </div>
+            <div class="col-sm-1 end">
+          <a class="btn btn-success" onclick="addBookId(<%=id%>)" id="add<%= id%>">+</a>
+          </div>
+          <br>
+          </div>
+
+          <%id = id + 1%>
+          <%end%>
+          <br>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Author:</h3>
+          </div>
+          <div class="col-sm-6">
+            <%= select_tag "author_id", options_from_collection_for_select(Author.all, "id", "author_name"), {class: "form-controll",  include_blank: true} %>
+              <%= form.text_field :author_id, id: :book_detail_author_id, class: "form-control ", disabled: true, style: "display: none;"%>
+                <input type="text" name="author_name" class="form-control author_name">
+                <!-- <%= form.text_field :author_id, id: :book_detail_author_id, :class => "form-control"  %> -->
+          </div>
+          <style>
+            .author_name {
+              display: none;
+            }
+            .domain_name {
+              display: none;
+            }
+            .publisher_name{
+              display: none;
+            }
+          </style>
+        
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Publisher:</h3>
+          </div>
+          <div class="col-sm-6">
+            <%= select_tag "publisher_id", options_from_collection_for_select(Publisher.all, "id", "publisher_name"), {class: "form-controll",  include_blank: true} %>
+              <%= form.text_field :publisher_id, id: :book_detail_publisher_id, class: "form-control ", disabled: true, style: "display: none;"%>
+              <input type="text" name="publisher_name" class="form-control publisher_name">
+                <!-- <%= form.text_field :publisher_id, id: :book_detail_publisher_id, :class => "form-control" %> -->
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Edition:</h3>
+          </div>
+          <div class="col-sm-6">
+            <%= form.text_field :book_edition, id: :book_detail_book_edition, :class => "form-control" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Year:</h3>
+          </div>
+          <div class="col-sm-6">
+            <input type1="text" class="form-control" />
+          </div>
+        </div>
+        <div class="row">
+              <div class="col-sm-6">
+                <h3>Author Type:</h3>
+              </div>
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <%= form.label "Forign Author" %><br />
+                  </div>
+                  <div class="col-sm-3">
+                    <%= form.radio_button :author_type, "Forign", :value => "Forign"  %>
+                  </div>
+                  <div class="col-sm-3">
+                    <%= form.label "Local Author" %><br />
+                  </div>
+                  <div class="col-sm-3">
+                    <%= form.radio_button :author_type, "Local", :value => "Local"  %>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+      </div>
+      <div class="actions">
+        <%= form.submit "Add Book", :class=> "btn btn-success" %>
+      </div>
+      <% end %>
+
+        <!-- Author Add -->
+        <div class="modal fade" id="authorModal" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Author</h4>
+              </div>
+              <div class="modal-body">
+
+                <tr>
+                  <td>
+                    <h3>Author name:</h3>
+                  </td>
+                  <td>
+                    <input type="text" />
+                  </td>
+                </tr>
+              </div>
+              <div class="modal-footer">
+                <tr>
+                  <td>
+                    <input type="button" value="ADD" class="btn-primary" />
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Publisher Modal -->
+        <!-- Author Add -->
+        <div class="modal fade" id="publisherModal" role="dialog">
+          <div class="modal-dialog modal-sm">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Punblisher</h4>
+              </div>
+              <div class="modal-body">
+
+                <tr>
+                  <td>
+                    <h3>Publisher name:</h3>
+                  </td>
+                  <td>
+                    <input type="text" />
+                  </td>
+                </tr>
+              </div>
+              <div class="modal-footer">
+                <tr>
+                  <td>
+                    <input type="button" value="ADD" class="btn-primary" />
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <script>
+          $('#domain_id').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Domain Name",
+            language: {
+              noResults: function () {
+                return "<span onclick='new_domain();' onmouseover='' style='color: #4925A1; cursor: pointer;'>New domain</span>";
+              }
+            }
+          });
+          $('#author_id').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Author Name",
+            language: {
+              noResults: function () {
+                return "<span onclick='new_author();' onmouseover='' style='color: #4925A1; cursor: pointer;'>New Author</span>";
+              }
+            }
+          });
+          $('#publisher_id').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Publisher Name",
+            language: {
+              noResults: function () {
+                return "<span onclick='new_publisher();' onmouseover='' style='color: #4925A1; cursor: pointer;'>New Publisher</span>";
+              }
+            }
+          });
+          function new_domain() {
+            $('#domain_id').attr('disabled', true);
+            $('#domain_id').next(".select2-container").hide();
+            $('.domain_name').attr('disabled', false);
+            $('.domain_name').show();
+          }
+          function new_author() {
+            $('#author_id').attr('disabled', true);
+            $('#author_id').next(".select2-container").hide();
+            $('.author_name').attr('disabled', false);
+            $('.author_name').show();
+
+          }
+          function new_publisher() {
+            $('#publisher_id').attr('disabled', true);
+            $('#publisher_id').next(".select2-container").hide();
+            $('.publisher_name').attr('disabled', false);
+            $('.publisher_name').show();
+          }
+          function addBookId(val){
+          $('#add'+ val).addClass('bookdisable');
+          val = val+ 1;
+            $('#bookid'+ val).attr('disabled', false);
+            $('#bookid'+ val).show();
+          }
+        </script>
+        <style>
+        .bookid{
+        display: none;
+        margin-top: 10px;
+        }
+        .bookdisable{
+        display: none;
+        }
+        </style>

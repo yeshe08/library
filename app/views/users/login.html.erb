@@ -1,0 +1,65 @@
+<div class="center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-5 col-md-3">
+                <div class="form-login">
+                        <%if  params[:format].present?%>
+                        <div id="error">
+                           <p class="notice error"><%=params[:format]%></p>
+                        </div>
+                         <%end%>
+                    <h4>Welcome back.</h4>
+                    <%= form_tag(:action => 'login_auth') do %>
+                    <input type="text" name="username" id="userName" class="form-control input-sm chat-input" placeholder="username" />
+                    </br>
+                    <input type="password" name="password" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+                    </br>
+                    <div class="wrapper">
+                        <span class="group-btn">
+                                <button class="btn btn-promary" type="submit">Log In</button>
+                        </span>
+                    </div>
+                    <%end%>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Roboto:400);
+
+
+
+    .form-login {
+        background-color: #EDEDED;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 15px;
+        border-color: #d2d2d2;
+        border-width: 5px;
+        box-shadow: 0 1px 0 #cfcfcf;
+    }
+
+    h4 {
+        border: 0 solid #fff;
+        border-bottom-width: 1px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .wrapper {
+        text-align: center;
+    }
+
+    .center {
+        text-align: center;
+    }
+</style>

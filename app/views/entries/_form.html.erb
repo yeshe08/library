@@ -1,0 +1,92 @@
+<%= form_with(model: entry, local: true) do |form| %>
+  <% if entry.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+
+      <ul>
+        <% entry.errors.full_messages.each do |message| %>
+          <li>
+            <%= message %>
+          </li>
+          <% end %>
+      </ul>
+    </div>
+    <% end %>
+
+
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Student Number:</h3>
+          </div>
+          <div class="col-sm-6">
+          <%= select_tag "user_id", options_from_collection_for_select(User.where.not(role_id: 1), "id", "user_id", class: "form-controll"), {class: "form-controll",  include_blank: true} %>
+              <%= form.text_field :student_id, id: :entry_student_id, class: "form-control ", disabled: true, style: "display: none;"%>
+
+            <%#= form.text_field :student_id, id: :entry_student_id, :class => "form-control" %>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Id:</h3>
+          </div>
+          <div class="col-sm-6">
+              <%= select_tag "bookid_id", options_from_collection_for_select(Bookid.where(is_issue: false), "id", "book_id"), {class: "form-controll",  include_blank: true} %>
+              <%= form.text_field :bookid_id, id: :book_detail_id, class: "form-control ", disabled: true, style: "display: none;"%>
+            <!-- <%= form.text_field :book_id, id: :entry_book_id ,:class => "form-con  trol" %> -->
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Issue Date:</h3>
+          </div>
+          <div class="col-sm-6">
+            <%# = form.date_field :issue_date, id: :entry_issue_date, :class => "form-control" %>
+            <input type="text" name="issue_date" id="entry_issue_date" class="form-control"/> 
+          </div>
+        </div>
+      </div>
+
+
+      <div class="actions">
+        <%= form.submit "Issue Book", :class=>"btn btn-success"%>
+      </div>
+      <% end %>
+      <script>
+          $('#bookid_id').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Register Number",
+            
+          });
+
+           $('#student_id').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Book Id",
+            class: "form-control"
+            
+          });
+      
+      </script>
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<script>
+    $(document).ready(function(){
+      var date_input=$('#entry_issue_date'); //our date input has the name "date"
+      date_input.datepicker({
+        format: 'dd/mm/yyyy',
+        minDate: new Date(),
+        //container: container,
+        todayHighlight: true,
+        autoclose: true,
+      })
+    })
+  </script>

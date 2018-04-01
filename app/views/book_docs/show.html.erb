@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Book name:</strong>
+  <%= @book_doc.book_name %>
+</p>
+
+<p>
+  <strong>Pdf doc:</strong>
+  <%= link_to 'view Book', root_url+ @book_doc.pdf_doc.to_s , target: :_blank %>
+  <!-- <%=link_to "view Book", book_docs_view_pdf_path({ id: @book_doc.pdf_doc}) %> -->
+</p>
+
+<%= link_to 'Edit', edit_book_doc_path(@book_doc) %> |
+<%= link_to 'Back', book_docs_path %>

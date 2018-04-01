@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Student:</strong>
+  <%= @entry.user.name %>
+</p>
+<p>
+  <strong>Issue date:</strong>
+  <%= @entry.issue_date %>
+</p>
+
+<p>
+  <strong>Return date:</strong>
+  <%= @entry.return_date %>
+</p>
+<p>
+  <strong>Book:</strong>
+  <%= @entry.bookid.book_detail.book_name %>
+</p>
+
+<%= link_to 'Edit', edit_entry_path(@entry) %> |
+<%= link_to 'Back', entries_path %>
