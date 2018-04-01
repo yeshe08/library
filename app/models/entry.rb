@@ -7,7 +7,7 @@ class Entry < ApplicationRecord
    CSV.generate(headers: true) do |csv|
       csv << ["Student", "Issue Date","Return Date","Book Name"]
       Entry.all.map do|ee|
-        csv<< [ee.student_id, ee.issue_date, ee.return_date, ee.bookid.book_detail.book_name]
+        csv<< [ee.user.name, ee.issue_date, ee.return_date, ee.bookid.book_detail.book_name]
       end
     end
 end
