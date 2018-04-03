@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20180326162832) do
   create_table "bookids", force: :cascade do |t|
     t.string "book_id"
     t.boolean "is_issue"
-    t.boolean "is_tempissue"
+    t.boolean "is_blocked"
     t.bigint "book_detail_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20180326162832) do
   end
 
   create_table "entries", force: :cascade do |t|
+    t.boolean "tempissue"
     t.string "issue_date"
     t.string "return_date"
     t.bigint "bookid_id"

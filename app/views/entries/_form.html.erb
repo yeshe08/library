@@ -35,9 +35,9 @@
             <h3>Book Id:</h3>
           </div>
           <div class="col-sm-6">
-              <%= select_tag "bookid_id", options_from_collection_for_select(Bookid.where(is_issue: false), "id", "book_id"), {class: "form-controll",  include_blank: true} %>
+              <%= select_tag "bookid_id", options_from_collection_for_select(Bookid.where(is_blocked: false, is_issue: false), "id", "book_id"), {class: "form-controll",  include_blank: true} %>
               <%= form.text_field :bookid_id, id: :book_detail_id, class: "form-control ", disabled: true, style: "display: none;"%>
-            <!-- <%= form.text_field :book_id, id: :entry_book_id ,:class => "form-con  trol" %> -->
+            <!-- <%#= form.text_field :book_id, id: :entry_book_id ,:class => "form-con  trol" %> -->
           </div>
         </div>
       </div>
@@ -90,3 +90,90 @@
       })
     })
   </script>
+
+
+
+
+
+
+
+
+
+
+
+<h1> Blocked Entry </h1>
+  <%= form_with(model: entry, local: true) do |form| %>
+
+       <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Book Id:</h3>
+          </div>
+          <div class="col-sm-6">
+              <%= select_tag "bookid_id1", options_from_collection_for_select(Bookid.where(is_blocked: true, is_issue: false), "id", "book_id"), {class: "form-controll",  include_blank: true} %>
+              <%= form.text_field :bookid_id, id: :book_detail_id, class: "form-control ", disabled: true, style: "display: none;"%>
+            <!-- <%#= form.text_field :book_id, id: :entry_book_id ,:class => "form-con  trol" %> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Student Number:</h3>
+          </div>
+          <div class="col-sm-6">
+          <%#= select_tag "user_id1", options_from_collection_for_select(User.where.not(role_id: 1), "id", "user_id", class: "form-controll"), {class: "form-controll",  include_blank: true} %>
+              <%#= form.text_field :student_id, id: :entry_student_id, class: "form-control ", disabled: true, style: "display: none;"%>
+
+            <%= form.text_field :user, id: :idid, :class => "form-control" , readonly: true%>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>Issue Date:</h3>
+          </div>
+          <div class="col-sm-6">
+            <%# = form.date_field :issue_date, id: :entry_issue_date, :class => "form-control" %>
+            <input type="text" name="issue_date" id="entry_issue_date" class="form-control"/> 
+            <input type="hidden" name="user_id" id="userid" class="form-control"/> 
+
+          </div>
+        </div>
+      </div>
+
+
+      <div class="actions">
+        <%= form.submit "Issue Book", :class=>"btn btn-success"%>
+      </div>
+      <% end %>
+
+       <script>
+          $('#bookid_id1').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Register Number",
+            
+          });
+
+           $('#student_id1').select2({
+            allowClear: true,
+            escapeMarkup: function (markup) { return markup; },
+            placeholder: "Book Id",
+            class: "form-control"
+            
+          });
+      $('#bookid_id1').on('select2:select', function (e) {
+    var data = e.params.data;
+    console.log(data.id);
+     $.ajax({url: "http://0.0.0.0:3000/book_details/get_bookid?id="+ data.id, success: function(result){
+          console.log(result)
+          document.getElementById("idid").value= result.user_id;
+          document.getElementById("userid").value= result.id;
+        }});
+     
+});
+</script>

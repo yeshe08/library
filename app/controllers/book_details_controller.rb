@@ -32,8 +32,9 @@ class BookDetailsController < ApplicationController
     # redirect_to root_url.to_  s + "/public/csv/my-books.csv"
   end
   def block_book
-   Entry.create(student_id: current_user.user_id,issue_date: Date.today,bookid_id: params[:book_id])
-   Bookid.find(params[:book_id].to_i).update(is_issue: true)
+   Entry.create(user_id: current_user.id,issue_date: Date.today,bookid_id: params[:book_id], tempissue: true)
+   Bookid.find(params[:book_id].to_i).update(is_issue: false, is_blocked: true)
+   redirect_to book_details_path(id: params[:book_id])
   end
   # GET /book_details/new
   def new
@@ -116,6 +117,10 @@ class BookDetailsController < ApplicationController
       format.html { redirect_to book_details_url, notice: 'Book detail was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def get_bookid
+    render json: Bookid.find(params[:id]).entry.user
   end
 
   private

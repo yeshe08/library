@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.all
+    @entries = Entry.all.where(tempissue: false)
   end
 
   # GET /entries/1
@@ -28,14 +28,15 @@ class EntriesController < ApplicationController
   # POST /entries
   # POST /entries.json
   def create
-    @entry = Entry.new( )
+    if params[:bookid_id1].nil?
+    @entry = Entry.new()
     @entry.user_id = params[:user_id].to_i
     @entry.issue_date = params[:issue_date].to_date
     @entry.return_date = params[:issue_date].to_date + 1.month
-    @entry.bookid_id = params[:bookid_id].to_i
+    @entry.bookid_id = params[:bookid_id].nil? ? params[:bookid_id1].to_i: params[:bookid_id].to_i
     respond_to do |format|
       if @entry.save
-        entry = Bookid.find(params[:bookid_id])
+        entry = Bookid.find(@entry.bookid_id)
         entry.update(is_issue: true)
         format.html { redirect_to entries_path, notice: 'Entry was successfully created.' }
         format.json { render :show, status: :created, location: @entry }
@@ -44,6 +45,15 @@ class EntriesController < ApplicationController
         format.json { render json: @entry.errors, status: :unprocessable_entity }
       end
     end
+  else
+ @entry = Entry.all.where(tempissue: true, bookid_id: params[:bookid_id1])
+ return_date = params[:issue_date].to_date + 1.month
+ @entry.present? ? @entry[0].update(tempissue: false, return_date: return_date) : nil
+  entry = Bookid.find(params[:bookid_id1])
+        entry.update(is_issue: true)
+ redirect_to entries_path 
+ 
+  end
   end
 
   # PATCH/PUT /entries/1
