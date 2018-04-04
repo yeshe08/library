@@ -33,7 +33,7 @@ class BookDetailsController < ApplicationController
   end
   def block_book
     book =Bookid.find_by(book_id: params[:book_id].to_i)
-   data = Entry.create(user_id: current_user.id,issue_date: Date.today,bookid_id: params[:book_id], tempissue: true)
+   data = Entry.create(user_id: current_user.id,issue_date: Date.today,bookid_id: book.id, tempissue: true)
    book.update(is_issue: false, is_blocked: true)
    render json: data
   end
