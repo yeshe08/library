@@ -3,6 +3,7 @@ class CreateEntries < ActiveRecord::Migration[5.1]
     create_table :entries do |t|
       # t.string :student_id
       t.boolean :tempissue
+      t.boolean :is_returned
       t.string :issue_date
       t.string :return_date
       t.references :bookid, foreign_key: true

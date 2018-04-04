@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 20180326162832) do
 
   create_table "entries", force: :cascade do |t|
     t.boolean "tempissue"
+    t.boolean "is_returned"
     t.string "issue_date"
     t.string "return_date"
     t.bigint "bookid_id"

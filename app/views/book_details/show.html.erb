@@ -40,21 +40,49 @@
     </tr>
 <tr>
     <th><h3 >Book ID:</h3></th>
-    <th><h3 style="float:left">
-     <%= form_tag('block_book', class: "form-horizontal") do%>
-     <input type="hidden" name="book_id" value="<%=@book_detail.id %>">
-      <%= select_tag "book_id", options_from_collection_for_select(@book_detail.bookids.where(is_issue: false), "id", "book_id"), {class: "form-controll bookid",  include_blank: true} %>
+    <th>
+      <div class="row">
+        <div class="col-10">
+      <h3 style="float:left">
+     <%#= form_tag('block_book', class: "form-horizontal") do%>
+     <input type="hidden" id="book_no" name="book_id" value="<%=@book_detail.id %>">
+      <%= select_tag "book_id", options_from_collection_for_select(@book_detail.bookids.where(is_blocked: false), "id", "book_id"), {class: "form-controll bookid",  include_blank: true} %>
     </h3>
+  </div>
     <br>
     <br>
+    <br>
+    <br>
+    <div class="col-2">
     <%if current_user.present?%>
     <%if current_user.role_id == 2%>
-     <%= submit_tag "Block Book", class: "btn btn-success pull-right" ,id: "job_card_save"%>
-    
+     <%#= submit_tag "Block Book", class: "btn btn-success pull-right" ,id: "job_card_save"%>
+    <button style="float:left" class="btn btn-primary" id="block" onclick="blockBook()">Block Book</button>
     <%end%>   
      <%end%>
-     <%end%>
+   </div>
+     <%#end%>
+     </div>
   </th>
+  <script>
+    function blockBook(){
+      var user_id = document.getElementById("book_no").getAttribute('value')
+      var book_id = document.getElementById("select2-book_id-container").getAttribute('title')
+      var data = {user_id: user_id, book_id: book_id}
+      console.log("log", "<%= root_url.to_s%>");
+        $.ajax({  
+        type: "POST",  
+        url: "<%= root_url.to_s%>/book_details/block_book",  
+        data: data,  
+        success: function(dataString) {  
+           if(data != undefined){
+            alert(data.book_id + " blocked Successfully");
+            window.reload();
+           } 
+        }  
+    });  
+    }
+  </script>
 
     </tr>
         

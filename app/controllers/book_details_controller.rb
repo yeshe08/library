@@ -32,9 +32,10 @@ class BookDetailsController < ApplicationController
     # redirect_to root_url.to_  s + "/public/csv/my-books.csv"
   end
   def block_book
-   Entry.create(user_id: current_user.id,issue_date: Date.today,bookid_id: params[:book_id], tempissue: true)
-   Bookid.find(params[:book_id].to_i).update(is_issue: false, is_blocked: true)
-   redirect_to book_details_path(id: params[:book_id])
+    book =Bookid.find_by(book_id: params[:book_id].to_i)
+   data = Entry.create(user_id: current_user.id,issue_date: Date.today,bookid_id: params[:book_id], tempissue: true)
+   book.update(is_issue: false, is_blocked: true)
+   render json: data
   end
   # GET /book_details/new
   def new
@@ -71,7 +72,7 @@ class BookDetailsController < ApplicationController
       if @book_detail.save
         params[:bookid].map do |id|
           if id.present?
-            Bookid.create(book_id: id, book_detail_id: @book_detail.id, is_issue: false)
+            Bookid.create(book_id: id, book_detail_id: @book_detail.id, is_issue: false, is_blocked: false)
           end
         end
         format.html { redirect_to book_details_path, notice: 'Book detail was successfully created.' }

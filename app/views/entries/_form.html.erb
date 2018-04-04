@@ -169,7 +169,7 @@
       $('#bookid_id1').on('select2:select', function (e) {
     var data = e.params.data;
     console.log(data.id);
-     $.ajax({url: "http://0.0.0.0:3000/book_details/get_bookid?id="+ data.id, success: function(result){
+     $.ajax({url: "<%= root_url.to_s%>/book_details/get_bookid?id="+ data.id, success: function(result){
           console.log(result)
           document.getElementById("idid").value= result.user_id;
           document.getElementById("userid").value= result.id;
