@@ -101,7 +101,7 @@
 
 
 
-<h1> Blocked Entry </h1>
+<h1> Blocked Book Entry </h1>
   <%= form_with(model: entry, local: true) do |form| %>
 
        <div class="container">
@@ -138,7 +138,7 @@
           </div>
           <div class="col-sm-6">
             <%# = form.date_field :issue_date, id: :entry_issue_date, :class => "form-control" %>
-            <input type="text" name="issue_date" id="entry_issue_date" class="form-control"/> 
+            <input type="text" name="issue_date" id="entry_issue_date1" class="form-control"/> 
             <input type="hidden" name="user_id" id="userid" class="form-control"/> 
 
           </div>
@@ -176,4 +176,15 @@
         }});
      
 });
+
+      $(document).ready(function(){
+      var date_input=$('#entry_issue_date1'); //our date input has the name "date"
+      date_input.datepicker({
+        format: 'dd/mm/yyyy',
+        minDate: new Date(),
+        //container: container,
+        todayHighlight: true,
+        autoclose: true,
+      })
+    })
 </script>
