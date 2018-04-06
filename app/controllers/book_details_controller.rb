@@ -31,6 +31,11 @@ class BookDetailsController < ApplicationController
     # redirect_to book_details_path
     # redirect_to root_url.to_  s + "/public/csv/my-books.csv"
   end
+  def book_doc_delete
+    @book_doc = BookDoc.find(params[:id].to_i)
+    @book_doc.destroy
+    redirect_to book_detail_path(params[:book])
+  end
   def block_book
     book =Bookid.find_by(book_id: params[:book_id].to_i)
    data = Entry.create(user_id: current_user.id,issue_date: Date.today,bookid_id: book.id, tempissue: true)

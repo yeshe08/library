@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'entries/entry_export'
   get 'domains/domain_export'
   post "book_details/block_book"
+  get "book_details/book_doc_delete"
   get "book_details/get_bookid" 
   get 'users/login'
   get 'users/logout'

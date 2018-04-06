@@ -108,8 +108,16 @@
 <h2>Book PDF</h2><hr style="margin-top:-35px;margin-left:110px;"></br>
 <% @book_detail.book_docs.map do |book|%>
 <image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHoAAAB6CAMAAABHh7fWAAAAZlBMVEX///8BAQEAAADq6uoLCwvl5eUhISHW1tYeHh7e3t4TExPi4uKBgYEqKir8/Pz39/dHR0e3t7eqqqqKiorw8PBfX18yMjLBwcE4ODh4eHiYmJjQ0NBQUFCSkpJZWVlubm4/Pz+hoaGqLlkRAAAFCUlEQVRogdWba3uqMAyAZ0CuEwRBQJzo//+Th7a0Vqdr2obtOfmwq/A2bdpcCB8fb6XoTlOfwcYsAP2he38jW4kn4IIgMzbAkQieT2jsnT6VBOQ65NyFDdrX97/M7F3qTR7sFNYU95301o3M4bUXeXImM/bJg1x7kBn74ExONTIghYjd8htx+4ZoqtLcJNuqV5eI4X65kUelwzz8AHfN9vikt9t6t3fyiL6ofrIOJ3aegT35o3y2TBd2pcg2C1bsn9EOtjZJdGJ1Hk/P+xHg0xYdSbTdqIdvRwHAYEcuM7FqVis9yyd88yi2egehvNLOB32+OgDt2Aodbf3Rdmxa9MZmvanRMP0V2oYdhIuFO6BfBlAzu0CjSbXm+xvHpkej7XwNNJK9Dhp1Kq+CxsUO5Ba+oBHx+TpaM7gx1loLvYH9n6E3xrRkRTQ066BP5oTFFOy5ohtzsgT7n6M91801R7I/pERLzJWb0E5az1lLu3uWKAm1fAwgXgn9Qsom7bQiwW+iueT3HO630R+dZP8+usCjcRbexN2ITIGVndNofTvON8xw6STthE9cE2QKT4qWlgOAsQhS9IWrDAh3RI6ebwbXIJu/tr+MLoHn3wMbACnavLk4+sQcJRwNTligCTcXm/CBo3coNOFas5rBrjigtSZED9y42Vr3iHyKFF2xGd+dARFnUqMbWDY28ebCuA9eq8cfKZTuo5MlLkydidhfi1IwnDFZOzFalFJxdVRidNkDdr6p0bwCbgrqV0Ln3HsRo3GxGdcaKhyaNDYTzylQRzi5mV3F5GBqQ8ToWBxnqLI5MbqWh3hmtjRi9IV5LZ7Ymh0IrYU3CbAQ6czYNzOa2H2wUtg2YsttKonRTnjLkKXwYBAajlPyUAF69tONmVvyc95Hiv4C9XieVygT+eEiSOM4f/KklGiWMUMiDrKCBSwQzXcNuuEYZbOZhsm+0umUFs5nWblqbuZhe470wtFZu5zQwstEj/2LbSaOF71yBro/JZzwm1rpIq+H/UOxTlXLtICRDt1kIv5ubt87hQC+bvWNL/9lBTS36bjr71RtANB3QT5eH3JQMnTMLfqq6gpMLp+33cMfNvojRTL0BTaypMBkP9VpM2+lcgAZm4v/3b0p1ebqNO36qcrvhhy3QmExKO05KtHmKo9StbDtnqOj+BAtE57pATrJhAcHNamH10NLu2qW8SF+IECPrZg6BsaEg2To6qhWebABe6PTqzIWywYKXwu/LabL/oN/Dq/Q7hZeTmKrCqWt2wc9Jry4CDLvTrJtdPFDTxy86/b8u52J+aFZA9p8TC8nqEPHpDuaFQVn25r4CFz659zRB468cjKmVuWBft5ctYw8AFe1eYF23VylHA20TmQfCx8XtV17U30O0uZzDrux3ZW0aE/5L9C4CpIVmraCZIX+DyZcfCz7+en+Cugyc41F3kqgwhuDp0/kEH2a2x+kkujIcDLI1wDg6HZqfpfzEloZPYBst/Z9n0DJKDNRY3wT39NH/3c4ZilVE7LZelS7NWQU/SG9ut3RWNJUDRUUc17JljeU3Rbn+6chOo15sHWSYDvWvdYPEyLMdtQ+z5LGxFX0YgfygcEXDz3FFeg3P17J/TboqM79FZ93AhGyvb/oidkQokOc2dQo2ahn+0oOZGxA9ytLGfdAQWfFHutcqejOPtYt5Vw7vc+X1pd+lznLrj+fYg//1+Spo+QBldtdQf4BVmxIj1i4wLcAAAAASUVORK5CYII=" style="height:150px;width:150px;margin-left: 46%"/></br>
-<a class="btn btn-primary" style="background-color:whitesmoke;color: red;border:1.5px solid grey;border-radius:5px;margin-left:50%" href="<%= root_url+ book.pdf_doc.to_s%>" target="blank">Open </a>
+<a class="btn btn-primary" style="background-color:whitesmoke;color: red;border:1.5px solid grey;border-radius:5px;margin-left:50%" href="<%= root_url+ book.pdf_doc.to_s%>" target="blank">Open </a>  | <%= link_to 'Destroy', book_details_book_doc_delete_path({id: book, book: @book_detail.id} ), data: { confirm: 'Are you sure?' } , :class => "btn btn-primary delete_buttion"%>
 <%end%>
+<style>
+.delete_buttion{
+background-color:whitesmoke;
+color: red;border:1.5px solid grey;
+border-radius:5px;
+margin-left:50%
+}
+</style>
 <%#= form_tag("/book_docs", method: "post") do %>
   
   <%#= file_field_tag "pdf_doc" %>
