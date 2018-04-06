@@ -46,7 +46,7 @@
       <h3 style="float:left">
      <%#= form_tag('block_book', class: "form-horizontal") do%>
      <input type="hidden" id="book_no" name="book_id" value="<%=@book_detail.id %>">
-      <%= select_tag "book_id", options_from_collection_for_select(@book_detail.bookids.where(is_blocked: false), "id", "book_id"), {class: "form-controll bookid",  include_blank: true} %>
+      <%= select_tag "book_id", options_from_collection_for_select(@book_detail.bookids.where(is_blocked: false, is_issue: false), "id", "book_id"), {class: "form-controll bookid",  include_blank: true} %>
     </h3>
   </div>
     <br>
