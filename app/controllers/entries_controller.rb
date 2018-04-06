@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
   # GET /entries
   # GET /entries.json
   def index
-    @entries = Entry.all.where(tempissue: false)
+    @entries = Entry.all#.where(tempissue: false)
   end
 
   # GET /entries/1
