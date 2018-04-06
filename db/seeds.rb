@@ -18,6 +18,7 @@ Role.create!([
 User.create!([
   {name: "yeshwanth", user_id: nil, email: "yeshwanth@gmail.com", password: "yeshwanth", mobile: "1234567890", role_id: 1},
   {name: "velu", user_id: nil, email: "velu@gmail.com", password: "velu", mobile: "7397136939", role_id: 1},
+  {name: "Keerthana", user_id: nil, email: "keerthana@gmail.com", password: "keerthana", mobile: "9626687875", role_id:1},
   {name: "vv", user_id: "1234567", email: "vvv", password: "vvv", mobile: "vvv", role_id: 2}
 ])
 Bookid.create!([
@@ -33,5 +34,6 @@ Entry.create!([
   {tempissue: true, issue_date: "2018-04-04", return_date: nil, bookid_id: 1, user_id: 3},
   {tempissue: false, issue_date: "2018-04-04", return_date: "2018-04-27", bookid_id: 2, user_id: 3}
 ])
+
 
 
